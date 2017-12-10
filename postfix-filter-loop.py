@@ -1,13 +1,13 @@
-# Author: Miroslav Houdek miroslav.houdek at gmail dot com
-# License is, do whatever you wanna do with it (at least I think that that is what LGPL v3 says)
-#
-
 import smtpd
 import asyncore
-
+import pythonwhois
+import tldextract
 import smtplib
-
 import traceback
+
+MAX_DAYS = 15
+HOST = 'localhost'
+PORT = 10025
 
 class CustomSMTPServer(smtpd.SMTPServer):
 
@@ -28,13 +28,13 @@ class CustomSMTPServer(smtpd.SMTPServer):
 #		print '>> EOT'
 
 		try:
-			# DO WHAT YOU WANNA DO WITH THE EMAIL HERE
-			# In future I'd like to include some more functions for users convenience, 
-			# such as functions to change fields within the body (From, Reply-to etc), 
-			# and/or to send error codes/mails back to Postfix.
-			# Error handling is not really fantastic either.
-		
-			pass
+			extracted = tldextract.extract(mailfrom)
+                        domain = "%s.%s" % (extracted.domain, extracted.suffix)
+                        domain_info = pythonwhois.get_whois(domain)
+                        delta = datetime.datetime.now() - domain_info.get('creation_date', [datetime.datetime.now()])[0]
+                        if delta.days < MAX_DAYS:
+                            print 'Prevent delivery from suspicious sender: %s' % maifrom
+                            return
 		except:
 			pass
 			print 'Something went south'
@@ -78,6 +78,6 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
 		return
 		
-server = CustomSMTPServer(('127.0.0.1', 10025), None)
+server = CustomSMTPServer((HOST, PORT), None)
 
 asyncore.loop()
