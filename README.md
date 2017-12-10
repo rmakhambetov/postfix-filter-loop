@@ -33,7 +33,7 @@ localhost:10026 inet  n       -       n       -       10      smtpd
       -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks,no_milters
       -o smtpd_authorized_xforward_hosts=127.0.0.0/8
 ```
-There are ways combinations of parameters to do that (see the FILTER_README referred above) but only this one worked for me. This is because what I needed is that mails come to my Python code BEFORE processed using virtual table and they get processed using virtual table AFTER. This is what I needed, but you can change the no_address_mappings parameter in main.cf and master.cf to do thy bidding.
+There are ways combinations of parameters to do that (see the [FILTER_README](http://www.postfix.org/FILTER_README.html)) but only this one worked for me. This is because what I needed is that mails come to my Python code BEFORE processed using virtual table and they get processed using virtual table AFTER. This is what I needed, but you can change the no_address_mappings parameter in main.cf and master.cf to do thy bidding.
 
 Run:
 ======
