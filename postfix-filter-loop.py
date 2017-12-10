@@ -5,12 +5,23 @@ import tldextract
 import smtplib
 import traceback
 import datetime
+import argparse
+import sys
 
-MAX_DAYS = 15
-FILTER_HOST = '127.0.0.1'
-FILTER_PORT = 10025
-POSTFIX_HOST = '127.0.0.1'
-POSTFIX_PORT = 10026
+parser=argparse.ArgumentParser()
+
+parser.add_argument('--postfix-host', help='Specify address where postfix is hosted')
+parser.add_argument('--postfix-port', help='Specify port where postfix is hosted')
+parser.add_argument('--filter-host', help='Specify address where filter-server is hosted')
+parser.add_argument('--filter-port', help='Specify port where filter-server is hosted')
+parser.add_argument('--max-days', help='Specify days')
+args=parser.parse_args()
+
+MAX_DAYS = int(args.max_days)
+POSTFIX_HOST = args.postfix_host or 'localhost'
+POSTFIX_PORT = int(args.postfix_port)
+FILTER_HOST = args.filter_host or 'localhost'
+FILTER_PORT = int(args.filter_port)
 
 class CustomSMTPServer(smtpd.SMTPServer):
 
@@ -34,7 +45,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
 		try:
 			server = smtplib.SMTP(POSTFIX_HOST, POSTFIX_PORT)
-			server.sendmail(mailfrom, rcpttos, data)
+			print(server.sendmail(mailfrom, rcpttos, data))
 			server.quit()
 #			print('send successful')
 		except smtplib.SMTPException:

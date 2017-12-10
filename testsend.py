@@ -6,7 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 server = smtplib.SMTP('localhost', 10025)
 
-me = 'rmakhambetov@lol1231113.io'
+me = 'rmakhambetov@lol.io'
 you = 'root@vsrv'
 msg = MIMEText('Test msg to test before queue filter')
 
