@@ -4,9 +4,9 @@ import asyncore
 
 import smtplib
 from email.mime.text import MIMEText
-server = smtplib.SMTP('localhost', 10026)
+server = smtplib.SMTP('localhost', 10025)
 
-me = 'tobi@ai.io'
+me = 'rmakhambetov@lol1231113.io'
 you = 'root@vsrv'
 msg = MIMEText('Test msg to test before queue filter')
 

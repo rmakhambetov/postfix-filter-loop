@@ -18,17 +18,6 @@ class CustomSMTPServer(smtpd.SMTPServer):
 		
 		mailfrom.replace('\'', '')
 		mailfrom.replace('\"', '')
-		
-		for recipient in rcpttos:
-			recipient.replace('\'', '')
-			recipient.replace('\"', '')
-		
-#		print('Receiving message from:', peer)
-#		print('Message addressed from:', mailfrom)
-#		print('Message addressed to  :', rcpttos)
-#		print('MSG >>')
-#		print(data)
-#		print('>> EOT')
 
 		try:
 			extracted = tldextract.extract(mailfrom)
@@ -36,7 +25,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
 			delta = datetime.datetime.now() - domain_info.get('creation_date', [datetime.datetime.now()])[0]
 			print('Sender\'s domain %s created %d days ago' % (mailfrom, delta.days))
 			if delta.days < MAX_DAYS:
-				print('Prevent delivery from suspicious sender: %s' % (maifrom))
+				print('Prevent delivery from suspicious sender: %s' % (mailfrom))
 				return
 		except:
 			pass
