@@ -14,7 +14,7 @@ python3 setup.py develop
 Configuring:
 ============
 
-What you need to do on Postfix side is to edit configuration according to the suggestions made in the Advanced Content Filtering above, but for your convenience, here is the quick version that could work for you too:
+What you need to do on Postfix side is to edit configuration according to the suggestions made in the [Advanced Content Filtering](http://www.postfix.org/FILTER_README.html#advanced_filter) above, but for your convenience, here is the quick version that could work for you too:
 
 (/etc/postfix/)main.cf:
 ```
