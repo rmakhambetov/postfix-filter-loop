@@ -4,6 +4,7 @@ import pythonwhois
 import tldextract
 import smtplib
 import traceback
+import datetime
 
 MAX_DAYS = 15
 FILTER_HOST = '127.0.0.1'
@@ -33,6 +34,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
 			extracted = tldextract.extract(mailfrom)
 			domain_info = pythonwhois.get_whois("%s.%s" % (extracted.domain, extracted.suffix))
 			delta = datetime.datetime.now() - domain_info.get('creation_date', [datetime.datetime.now()])[0]
+			print('Sender\'s domain %s created %d days ago' % (mailfrom, delta.days))
 			if delta.days < MAX_DAYS:
 				print('Prevent delivery from suspicious sender: %s' % (maifrom))
 				return
