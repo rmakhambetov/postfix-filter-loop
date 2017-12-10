@@ -31,15 +31,15 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
 		try:
 			extracted = tldextract.extract(mailfrom)
-                        domain_info = pythonwhois.get_whois("%s.%s" % (extracted.domain, extracted.suffix))
-                        delta = datetime.datetime.now() - domain_info.get('creation_date', [datetime.datetime.now()])[0]
-                        if delta.days < MAX_DAYS:
-                            print('Prevent delivery from suspicious sender: %s' % (maifrom))
-                            return
+			domain_info = pythonwhois.get_whois("%s.%s" % (extracted.domain, extracted.suffix))
+			delta = datetime.datetime.now() - domain_info.get('creation_date', [datetime.datetime.now()])[0]
+			if delta.days < MAX_DAYS:
+				print('Prevent delivery from suspicious sender: %s' % (maifrom))
+				return
 		except:
 			pass
-			print 'Something went south'
-			print traceback.format_exc()
+			print('Something went south')
+			print(traceback.format_exc())
 
 		try:
 			server = smtplib.SMTP(POSTFIX_HOST, POSTFIX_PORT)
