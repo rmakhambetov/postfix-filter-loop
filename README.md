@@ -37,5 +37,5 @@ There are ways combinations of parameters to do that (see the [FILTER_README](ht
 
 Run:
 ======
-python3 postfix-filter-loop.py 
+python3 postfix-filter-loop.py --max-days=15 --postfix-host=localhost --postfix-port=10026 --filter-host=localhost --filter-port=10025 
 
