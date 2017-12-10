@@ -29,11 +29,10 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
 		try:
 			extracted = tldextract.extract(mailfrom)
-                        domain = "%s.%s" % (extracted.domain, extracted.suffix)
-                        domain_info = pythonwhois.get_whois(domain)
+                        domain_info = pythonwhois.get_whois("%s.%s" % (extracted.domain, extracted.suffix))
                         delta = datetime.datetime.now() - domain_info.get('creation_date', [datetime.datetime.now()])[0]
                         if delta.days < MAX_DAYS:
-                            print 'Prevent delivery from suspicious sender: %s' % maifrom
+                            print 'Prevent delivery from suspicious sender: %s' % (maifrom)
                             return
 		except:
 			pass
